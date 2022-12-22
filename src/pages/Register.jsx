@@ -5,10 +5,10 @@ export const Register = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
-    e.preventdefault();
-    debugger;
+    e.preventDefault();
+    //debugger;
     const { name, email, password } = e.target.elements;
-
+    const form = e.target;
     dispatch(
       register({
         name: name.value,
@@ -16,6 +16,7 @@ export const Register = () => {
         password: password.value,
       })
     );
+    form.reset();
   };
 
   return (

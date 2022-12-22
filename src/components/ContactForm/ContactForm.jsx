@@ -1,23 +1,35 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 import { Button, Form } from './ContactForm.styled';
 import { Input, Label } from 'components/Filter/Filter.styled';
 import * as contactsOperations from '../../redux/contacts/operations';
 import {toast} from 'react-hot-toast';
+import { selectItems } from "redux/contacts/selectors";
 
 export function ContactForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
+  const contacts = useSelector(selectItems);
 
   const handleSubmit = e => {
     e.preventDefault();
-    const {name, mobile} = e.target.elements;    
-    toast.success("Контакт уже есть в списке");
+    //const {name, mobile} = e.target.elements;    
+    const isInList = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
 
-    dispatch(contactsOperations.addContact({name: name.value, phone: mobile.value}));
+    if (isInList) {
+      toast.error('Контакт уже есть в списке');
+      setName('');
+      setMobile('');
+      return;
+    }
+
+    dispatch(contactsOperations.addContact({name: name, number: mobile}));
     
-    e.target.reset();    
+    setName('');
+    setMobile('');   
   };
 
   return (
