@@ -1,16 +1,16 @@
 import { ContactList } from 'components/ContactsList/ContactsList';
 import { Filter } from 'components/Filter/Filter';
-import { Section } from 'components/Section/Section';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { selectItems, selectIsLoading } from 'redux/contacts/selectors';
 import * as contactsOperations from '../redux/contacts/operations';
 import { ContactForm } from 'components/ContactForm/ContactForm';
+import { Box } from 'components/Box/Box';
 //import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 
 export const PhoneBook = () => {
   //const isLoggedIn = useSelector(selectIsLoggedIn);
-  
+
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
@@ -21,11 +21,13 @@ export const PhoneBook = () => {
   const contacts = useSelector(selectItems);
 
   return (
-    <>
-      <Section title="PhoneBook">
+    <Box>
+      <section>
+        <h2>PhoneBook</h2>
         <ContactForm />
-      </Section>
-      <Section title="Contacts">
+      </section>
+      <section>
+        <h2>Contacts</h2>
         {isLoading && <b>Request in progress...</b>}
         {contacts?.length > 0 && (
           <>
@@ -34,8 +36,7 @@ export const PhoneBook = () => {
             <ContactList />
           </>
         )}
-      </Section>
-      
-    </>
+      </section>
+    </Box>
   );
 };
