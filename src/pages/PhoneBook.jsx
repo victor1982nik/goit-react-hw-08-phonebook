@@ -7,7 +7,7 @@ import * as contactsOperations from '../redux/contacts/operations';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Box } from 'components/Box/Box';
 
-export const PhoneBook = () => {
+export default function PhoneBook() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
@@ -36,4 +36,4 @@ export const PhoneBook = () => {
       </section>
     </Box>
   );
-};
+}
