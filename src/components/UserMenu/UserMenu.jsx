@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Box } from 'components/Box/Box';
 import { logOut } from 'redux/auth/authOperations';
 import { useAuth } from 'hooks/useAuth';
-import css from './UserMenu.module.css';
+import { Button, Text } from '@chakra-ui/react';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
@@ -10,10 +10,17 @@ export const UserMenu = () => {
 
   return (
     <Box display="flex" alignItems="center" gridGap={3}>
-      <p className={css.username}> Welcome, {user}</p>
-      <button type="button" onClick={() => dispatch(logOut())}>
+      <Text fontWeight="700"> Welcome, {user}</Text>
+      <Button
+        colorScheme="teal"
+        _hover={{
+          background: 'green',
+          color: 'teal.500',
+        }}
+        onClick={() => dispatch(logOut())}
+      >
         Logout
-      </button>
+      </Button>
     </Box>
   );
 };

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { selectItems, selectIsLoading } from 'redux/contacts/selectors';
 import * as contactsOperations from '../redux/contacts/operations';
 import { ContactForm } from 'components/ContactForm/ContactForm';
-import { Box } from 'components/Box/Box';
+import { Text } from '@chakra-ui/react';
 
 export default function PhoneBook() {
   const dispatch = useDispatch();
@@ -18,22 +18,25 @@ export default function PhoneBook() {
   const contacts = useSelector(selectItems);
 
   return (
-    <Box>
+    <>
       <section>
-        <h2>PhoneBook</h2>
+        <Text fontSize="28" textAlign="center" mb={5}>
+          PhoneBook
+        </Text>
         <ContactForm />
       </section>
       <section>
-        <h2>Contacts</h2>
+        <Text fontSize="28" textAlign="center" mb={5}>
+          Contacts
+        </Text>
         {isLoading && <b>Request in progress...</b>}
         {contacts?.length > 0 && (
           <>
             <Filter />
-            <br />
             <ContactList />
           </>
         )}
       </section>
-    </Box>
+    </>
   );
 }

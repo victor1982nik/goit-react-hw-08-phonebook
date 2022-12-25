@@ -1,6 +1,6 @@
+import { Button, Text, Box } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/authOperations';
-import css from './RegisterForm.module.css';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -21,22 +21,73 @@ export const RegisterForm = () => {
   };
 
   return (
-    <div>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <label className={css.label}>
+    <Box width="300px" ml="auto" mr="auto">
+      <form onSubmit={handleSubmit}>
+        <Text
+          as="label"
+          display="flex"
+          flexDirection="column"
+          mb="16px"
+          fontWeight={500}
+        >
           Name
-          <input type="text" name="name" />
-        </label>
-        <label className={css.label}>
+          <Text
+            as="input"
+            border="1px"
+            borderRadius={4}
+            p={1}
+            placeholder="John Smith"
+            type="text"
+            name="name"
+          />
+        </Text>
+        <Text
+          as="label"
+          display="flex"
+          flexDirection="column"
+          mb="16px"
+          fontWeight={500}
+        >
           Email
-          <input type="email" name="email" />
-        </label>
-        <label className={css.label}>
+          <Text
+            as="input"
+            border="1px"
+            borderRadius={4}
+            p={1}
+            placeholder="yourmail@mail.com"
+            type="email"
+            name="email"
+          />
+        </Text>
+        <Text
+          as="label"
+          display="flex"
+          flexDirection="column"
+          mb="16px"
+          fontWeight={500}
+        >
           Password
-          <input type="password" name="password" />
-        </label>
-        <button type="submit">Register</button>
+          <Text
+            as="input"
+            border="1px"
+            borderRadius={4}
+            p={1}
+            placeholder="your password"
+            type="password"
+            name="password"
+          />
+        </Text>
+        <Button
+          colorScheme="teal"
+          _hover={{
+            background: 'green',
+            color: 'teal.500',
+          }}
+          type="submit"
+        >
+          Register
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 };
