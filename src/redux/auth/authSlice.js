@@ -2,35 +2,43 @@ import { createSlice } from "@reduxjs/toolkit";
 import { register, logIn, logOut, refreshCurrentUser } from "./authOperations";
 
 const initialState = {
-    user: { name: null, email: null},
-    isLoggedIn: false,
+    user: { name: null, email: null},    
     token: null,
+    isLoggedIn: false,
+    isRefreshing: false,
 } 
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    extraReducers: {
-        [register.fulfilled]: (state, action) => {
+    extraReducers: builder  => {
+        builder
+        .addCase(register.fulfilled, (state, action) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isLoggedIn = true;
-        },
-        [logIn.fulfilled]: (state, action) => {
+        })
+        .addCase(logIn.fulfilled, (state, action) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isLoggedIn = true;
-        },
-        [logOut.fulfilled]: (state) => {
+        })
+        .addCase(logOut.fulfilled, (state) => {
             state.user = { name: null, email: null};
             state.token = null;
             state.isLoggedIn = false;
-        },
-        [refreshCurrentUser.fulfilled]: (state, action) => {
-            //console.log(action.payload);
+        })
+        .addCase(refreshCurrentUser.fulfilled, (state, action) => {
             state.user = action.payload;            
             state.isLoggedIn = true;
-        },
+            state.isRefreshing = false;
+        })
+        .addCase(refreshCurrentUser.pending, (state) => {            
+            state.isRefreshing = true;
+        })
+        .addCase(refreshCurrentUser.rejected, (state) => {            
+            state.isRefreshing = false;
+        })        
     },
 });
 

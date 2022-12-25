@@ -4,19 +4,19 @@ axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 export async function registerUser(data)  {
     const result = await axios.post('/users/signup', data); 
-    console.log(result) ;
+    //console.log(result) ;
     return result.data;
 }
 
 export async function logInUser(data)  {
     const result = await axios.post('/users/login', data); 
-    console.log(result) ;
+    //console.log(result) ;
     return result.data;
 }
 
 export async function logOutUser()  {
     const result = await axios.post('/users/logout'); 
-    console.log(result) ;
+    //console.log(result) ;
     return result.data;
 }
 
@@ -30,7 +30,7 @@ export const clearAuthHeader = () => {
 
 export async function refreshUser()  {
     const result = await axios.get('/users/current'); 
-    console.log(result) ;
+    //console.log(result) ;
     return result.data;
 }
   

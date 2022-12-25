@@ -6,11 +6,8 @@ import { selectItems, selectIsLoading } from 'redux/contacts/selectors';
 import * as contactsOperations from '../redux/contacts/operations';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Box } from 'components/Box/Box';
-//import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 
 export const PhoneBook = () => {
-  //const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 

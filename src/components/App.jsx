@@ -10,15 +10,17 @@ import { Login } from 'pages/Login';
 import { Register } from 'pages/Register';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
+import { useAuth } from 'hooks/useAuth';
 
 export function App() {
+  const {isRefreshing} = useAuth();
   const dispatch = useDispatch();
-
+  //console.log(isRefreshing);
   useEffect(() => {
     dispatch(refreshCurrentUser());
   }, [dispatch]);
 
-  return (
+  return (!isRefreshing &&(
     <div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
@@ -47,5 +49,6 @@ export function App() {
         </Route>
       </Routes>
     </div>
+    )
   );
 }

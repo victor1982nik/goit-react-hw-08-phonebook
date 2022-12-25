@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { registerUser, setAuthHeader, clearAuthHeader, logInUser, logOutUser, refreshUser } from "api/authApi";
+import * as authAPI from "api/authApi";
 
 export const register = createAsyncThunk("auth/register", async (credentials, thunkAPI) => {
     try {        
-        const data = await registerUser(credentials);        
+        const data = await authAPI.registerUser(credentials);        
         //console.log(data);
-        setAuthHeader(data.token);
+        authAPI.setAuthHeader(data.token);
         return data;
     } catch(error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -14,9 +14,9 @@ export const register = createAsyncThunk("auth/register", async (credentials, th
 
 export const logIn = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
     try {        
-        const data = await logInUser(credentials);        
+        const data = await authAPI.logInUser(credentials);        
         //console.log(data);
-        setAuthHeader(data.token);
+        authAPI.setAuthHeader(data.token);
         return data;
     } catch(error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -25,9 +25,9 @@ export const logIn = createAsyncThunk("auth/login", async (credentials, thunkAPI
 
 export const logOut = createAsyncThunk("auth/logout", async (_,thunkAPI) => {
     try {        
-        const data = await logOutUser();        
+        const data = await authAPI.logOutUser();        
         //console.log(data);
-        clearAuthHeader();
+        authAPI.clearAuthHeader();
         return data;
     } catch(error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -41,9 +41,9 @@ export const refreshCurrentUser = createAsyncThunk("auth/refresh", async (_,thun
             return thunkAPI.rejectWithValue("Token invalid");
             //return state;
         }
-        setAuthHeader(persistedToken);
+        authAPI.setAuthHeader(persistedToken);
      try {     
-        const data = await refreshUser();        
+        const data = await authAPI.refreshUser();        
         //console.log(data);
         //setAuthHeader(data.token);
         return data;
