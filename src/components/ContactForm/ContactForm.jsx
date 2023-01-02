@@ -1,34 +1,37 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import * as contactsOperations from '../../redux/contacts/operations';
-import { toast } from 'react-hot-toast';
-import { selectItems } from 'redux/contacts/selectors';
+import toast from 'react-hot-toast';
 import { Button, Box, Text } from '@chakra-ui/react';
+import {
+  useGetContactsQuery,
+  useAddContactMutation,
+} from 'redux/contacts/contactsSlice';
 
 export function ContactForm() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [mobile, setMobile] = useState('');
-  const contacts = useSelector(selectItems);
+  const [addContact] = useAddContactMutation();
+  const { data: contacts } = useGetContactsQuery();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    //const {name, mobile} = e.target.elements;
+
+    const { name, mobile } = e.target.elements;
+    const form = e.currentTarget;
+
+    if (name.value === '' || mobile.value === '') {
+      toast.error('Введите имя или телефон');
+      return;
+    }
+
     const isInList = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
+      contact => contact.name.toLowerCase() === name.value.toLowerCase()
     );
 
     if (isInList) {
       toast.error('Контакт уже есть в списке');
-      setName('');
-      setMobile('');
+      form.reset();
       return;
     }
-
-    dispatch(contactsOperations.addContact({ name: name, number: mobile }));
-
-    setName('');
-    setMobile('');
+    await addContact({ name: name.value, phone: mobile.value });
+    toast.success('Успешно добавлен');
+    form.reset();
   };
 
   return (
@@ -54,10 +57,9 @@ export function ContactForm() {
               borderRadius={4}
               name="name"
               type="text"
-              value={name}
+              //value={name}
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              onChange={e => setName(e.target.value)}
             />
           </Text>
 
@@ -71,10 +73,9 @@ export function ContactForm() {
               borderRadius={4}
               name="mobile"
               type="tel"
-              value={mobile}
+              //value={mobile}
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              onChange={e => setMobile(e.target.value)}
             />
           </Text>
           <br />

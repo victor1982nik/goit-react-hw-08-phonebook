@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter } from 'redux/contacts/selectors';
-
 import { setFilter } from 'redux/filterSlice';
 import { Text, Box } from '@chakra-ui/react';
 

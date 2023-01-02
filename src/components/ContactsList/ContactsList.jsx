@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDeleteContactMutation } from 'redux/contacts/contactsSlice';
+import { useSelector } from 'react-redux';
 import * as contactsSelectors from 'redux/contacts/selectors';
-import { deleteContact } from 'redux/contacts/operations';
 import { Box, Button, Text } from '@chakra-ui/react';
 
 export function ContactList() {
-  const dispatch = useDispatch();
+  const [deleteContact] = useDeleteContactMutation();
 
   const filteredContacts = useSelector(
     contactsSelectors.selectFilteredContacts
@@ -49,7 +48,7 @@ export function ContactList() {
               border="1px"
               borderColor="gray.500"
               _hover={{ background: 'teal' }}
-              onClick={() => dispatch(deleteContact(contact.id))}
+              onClick={() => deleteContact(contact.id)}
             >
               Delete
             </Button>
